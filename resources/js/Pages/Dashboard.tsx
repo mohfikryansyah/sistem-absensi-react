@@ -1,7 +1,21 @@
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head } from '@inertiajs/react';
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import { Head } from "@inertiajs/react";
+import { useEffect } from "react";
 
 export default function Dashboard() {
+    console.log(window.Echo);
+
+    useEffect(() => {
+        window.Echo.connector.pusher.connection.bind(
+            "state_change",
+            (states: any) => {
+                console.log("Connection states:", {
+                    previous: states.previous,
+                    current: states.current,
+                });
+            }
+        );
+    }, []);
     return (
         <AuthenticatedLayout
             header={
